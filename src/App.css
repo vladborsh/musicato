@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #6c768b;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,15 +24,38 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* The element to apply the animation to */
+
+.result {
+  width: 100%;
+  height: 50px;
+  transition: 0.3s all linear
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.success {
+  background-color: rgba(43, 255, 43, 0.717);
+}
+
+.fail {
+  background-color: rgba(254, 87, 87, 0.66);
+}
+
+.none {
+  background-color: none;
+}
+
+.symbols {
+  font-size: calc(10px + 2vmin);
+  margin: 15px;
+}
+
+.symbols button {
+  font-size: calc(10px + 1vmin);
+  background: #95a3c1;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 10px 20px;
+  margin: 10px;
 }
