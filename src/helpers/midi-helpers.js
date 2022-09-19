@@ -10,7 +10,10 @@ export function callMIDIAccess() {
   }
 
   function onMIDIFailure() {
-    console.warn('Could not access your MIDI devices.');
+    const alertMessage = 'Could not access your MIDI devices.';
+
+    alert(alertMessage);
+    console.warn(alertMessage);
   }
 
   return navigator.requestMIDIAccess()
@@ -36,16 +39,15 @@ export function getMIDIMessage(message, noteOnCb, noteOffCb) {
   }
 }
 
-
 /* 
   Note values are on a range from 0–127, lowest to highest. 
   For example, the lowest note on an 88-key piano has a value of 21, and the highest note is 108. 
   A “middle C” is 60.
 */
-export function getRandomNote() {
+export const getRandomNote = (clef = 'treble') => {
   const middleC = 60;
-  const rangeStart = middleC - 7;
-  const rangeEnd = middleC + 28;
+  const rangeStart = clef === 'treble' ? middleC - 7 : middleC - 30;
+  const rangeEnd = clef === 'treble' ? middleC + 30: middleC + 7;
 
   return Math.floor(Math.random() * (rangeEnd - rangeStart) + rangeStart);
 }

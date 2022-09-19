@@ -23,7 +23,8 @@ const NOTE_RU_MAP = {
   G: 'Соль',
 };
 
-const OCTAVE_TO_LINE = [-11.5, -8, -4.5, -1, 2.5, 6, 9.5]; 
+const TREBLE_CLEF_OCTAVE_TO_LINE = [-11.5, -8, -4.5, -1, 2.5, 6, 9.5]; 
+const BASE_CLEF_OCTAVE_TO_LINE = [-5.5, -2, 1.5, 5, 8.5, 12, 15.5];
 const FIRST_OCTAVE_NOTE = 24;
 const OCTAVE_SIZE = 12;
 
@@ -45,10 +46,12 @@ export const getNoteRuSymbol = note => {
   return `${NOTE_RU_MAP[noteConfig.symbol]}${noteConfig.isSharp ? ' диез' : ''}`;
 }
 
-export const getNoteConfig = note => {
+export const getNoteConfig = (note, clef = 'treble') => {
   const noteConfig = getNoteBaseConfig(note);
   const octave = Math.floor((note - FIRST_OCTAVE_NOTE) / OCTAVE_SIZE);
-  const octaveNoteLine = OCTAVE_TO_LINE[octave];
+  const octaveNoteLine = clef === 'treble' 
+    ? TREBLE_CLEF_OCTAVE_TO_LINE[octave]
+    : BASE_CLEF_OCTAVE_TO_LINE[octave];
   const noteLine = octaveNoteLine + noteConfig.noteShift;
   
   return {
