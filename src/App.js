@@ -13,16 +13,25 @@ const getNewNote = (prevNote, clef) => {
   return newNote === prevNote ? getNewNote(newNote, clef) : newNote;
 }
 
+const getRandomClef = () => Math.random() > 0.5 ? 'treble' : 'base';
+
 const App = () => {
   const [note, setNote] = useState(getRandomNote());
   const [midiInputs, setMidiInputs] = useState(null);
   const [clef, setClef] = useState('treble');
+  const [isRandomClef, setIsRandomClef] = useState(false);
   const [result, setResult] = useState('none');
 
   const noteOn = (inputNote) => {
     if (inputNote === note) {
       setResult('success');
-      setNote(getNewNote(note, clef));
+      if (isRandomClef) {
+        const randomClef = getRandomClef();
+        setClef(randomClef);
+        setNote(getNewNote(note, randomClef));
+      } else {
+        setNote(getNewNote(note, clef));
+      }
       setTimeout(() => setResult('none'), 300);
     } else {
       setResult('fail');
@@ -31,8 +40,16 @@ const App = () => {
   };
 
   const onNewClef = (newClef) => {
-    setClef(newClef); 
-    setNote(getNewNote(note, newClef));
+    if (newClef === 'random') {
+      setIsRandomClef(true);
+      const randomClef = getRandomClef();
+      setClef(randomClef);
+      setNote(getNewNote(note, randomClef));
+    } else {
+      setIsRandomClef(false);
+      setClef(newClef); 
+      setNote(getNewNote(note, newClef));
+    }
   }
 
   if (midiInputs) {

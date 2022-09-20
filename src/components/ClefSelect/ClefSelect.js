@@ -7,6 +7,7 @@ const ClefSelect = (props) => {
       <div className="dropup-content">
         <a href="#" onClick={() => props.onChange('treble')}>treble clef</a>
         <a href="#" onClick={() => props.onChange('base')}>base clef</a>
+        <a href="#" onClick={() => props.onChange('random')}>random</a>
       </div>
     </div>
   );
