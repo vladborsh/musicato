@@ -14,10 +14,12 @@ const getNewNote = (prevNote, clef) => {
 }
 
 const getRandomClef = () => Math.random() > 0.5 ? 'treble' : 'base';
+const getRandomIsFlat = () => Math.random() > 0.5;
 
 const App = () => {
   const [note, setNote] = useState(getRandomNote());
   const [midiInputs, setMidiInputs] = useState(null);
+  const [isFlat, setIsFlat] = useState(false);
   const [clef, setClef] = useState('treble');
   const [isRandomClef, setIsRandomClef] = useState(false);
   const [result, setResult] = useState('none');
@@ -29,8 +31,10 @@ const App = () => {
         const randomClef = getRandomClef();
         setClef(randomClef);
         setNote(getNewNote(note, randomClef));
+        setIsFlat(getRandomIsFlat());
       } else {
         setNote(getNewNote(note, clef));
+        setIsFlat(getRandomIsFlat());
       }
       setTimeout(() => setResult('none'), 300);
     } else {
@@ -63,7 +67,11 @@ const App = () => {
       console.info('This browser supports WebMIDI!');
 
       callMIDIAccess((note) => noteOn(note), () => {})
-        .then(midiInputHandlers => setMidiInputs(midiInputHandlers));
+        .then(midiInputHandlers => {
+          console.info('Midi input accepted!');
+
+          setMidiInputs(midiInputHandlers)
+        });
     } else {
       const alertMessage = 'WebMIDI is not supported in this browser.';
 
@@ -72,7 +80,8 @@ const App = () => {
     }
   }, [])
 
-  const selectedNote = getNoteConfig(note, clef);
+  const selectedNote = getNoteConfig(note, clef, isFlat);
+  console.log(selectedNote);
 
   return (
     <div className="App">

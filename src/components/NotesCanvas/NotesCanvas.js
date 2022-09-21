@@ -60,6 +60,10 @@ const NotesCanvas = (props) => {
     if (props.selectednote.isSharp) {
       drawText(ctx, [180, BASE_LINES_START + (lineOnCanvas * LINE_SPACE) + 3], '#', 30)
     }
+
+    if (props.selectednote.isFlat) {
+      drawText(ctx, [130, BASE_LINES_START + (lineOnCanvas * LINE_SPACE) + 6], 'b', 30)
+    }
   }
 
   draw(context);
